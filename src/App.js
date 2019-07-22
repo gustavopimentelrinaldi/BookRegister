@@ -9,13 +9,30 @@ class App extends Component{
       this.state = { lista : []};
   }
 
-  componentWillMount(){
+  componentDidMount(){
     $.ajax({
       url: "http://cdc-react.herokuapp.com/api/autores",
       dataType: 'json',
       success: function(resposta){
         this.setState({lista:resposta})
       }.bind(this)
+    })
+  }
+
+  enviaForm(evento){
+    evento.preventDefault();
+    $.ajax({
+      url: "http://cdc-react.herokuapp.com/api/autores",
+      contentType: 'application/json',
+      dataType: 'json',
+      type: 'post',
+      data: JSON.stringfy({nome: '', email:'', senha:''}),
+      success: function(resposta){
+        console.log("enviado com sucesso!");
+      },
+      error: function(resposta){
+        console.log("erro!");
+      }
     })
   }
 
@@ -46,7 +63,7 @@ class App extends Component{
 
       <div className="content">
       <div className="pure-form pure-form-aligned">
-            <form className="pure-form pure-form-aligned">
+            <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="post">
               <div className="pure-control-group">
                 <label htmlFor="nome">Nome</label> 
                 <input id="nome" type="text" name="nome"/>                  
@@ -78,7 +95,7 @@ class App extends Component{
                 {
                   this.state.lista.map(function(autor){
                     return(
-                      <tr>
+                      <tr key="autor.id">
                         <td>{autor.nome}</td>
                         <td>{autor.email}</td>
                       </tr>
