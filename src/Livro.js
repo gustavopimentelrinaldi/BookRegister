@@ -57,7 +57,7 @@ class FormularioLivro extends Component {
 					<InputCustomizado id="preco" type="text" name="preco" value={this.state.preco} onChange={this.setPreco} label="Preço"/>
 					<div className="pure-control-group">
             <label htmlFor="autorId">Autor</label>
-						<select name="autorId" id="autorId" onChange={this.setAutorId}>
+						<select value={this.state.autorId} name="autorId" id="autorId" onChange={this.setAutorId}>
 							<option value="">Selecione o autor</option>
 							{
 								this.props.autores.map(function(autor){
